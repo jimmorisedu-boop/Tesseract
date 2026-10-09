@@ -100,13 +100,30 @@ def candidates(points, mode, quiet_db, min_quiet_ms):
     return result
 
 
+def find_diagnostic_font():
+    windir = os.environ.get('WINDIR', 'C:/Windows')
+    candidates = [
+        Path('/System/Library/Fonts/Supplemental/Arial.ttf'),
+        Path('/Library/Fonts/Arial.ttf'),
+        Path(windir) / 'Fonts' / 'arial.ttf',
+        Path(windir) / 'Fonts' / 'segoeui.ttf',
+        Path('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'),
+        Path('/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf'),
+        Path('/usr/share/fonts/dejavu/DejaVuSans.ttf'),
+    ]
+    for p in candidates:
+        if p.is_file():
+            return p.as_posix().replace(':', '\:')
+    return None
+
+
 def draw_filter(report):
     width, height, left, top = 1320, 360, 60, 86
     start, end = report['window_start_ms'], report['window_end_ms']
     def x(t):
         return left + min(width-1, max(0, round(width * (t-start) / (end-start))))
-    diagnostic_font = Path('/System/Library/Fonts/Supplemental/Arial.ttf')
-    font_option = f"fontfile='{diagnostic_font}':" if diagnostic_font.is_file() else ''
+    diagnostic_font = find_diagnostic_font()
+    font_option = f"fontfile='{diagnostic_font}':" if diagnostic_font else ''
     def label(text, px, py, size=18, color='0xe5e7eb'):
         # Only internally generated labels/numbers are passed into filter syntax.
         return f"drawtext={font_option}text='{text}':expansion=none:fontsize={size}:fontcolor={color}:x={px}:y={py}"
@@ -205,9 +222,9 @@ def waveform(path, output, report_path=None, mode='music', start_ms=0, duration_
                    '-frames:v', '1', '-update', '1', png])
         js.write_text(json.dumps(report, indent=2)+'\n')
         # No incomplete-looking deliverable after processing failure; refuse races too.
-        os.link(png, out)
+        os.replace(png, out)
         try:
-            os.link(js, dest)
+            os.replace(js, dest)
         except OSError:
             out.unlink()
             raise

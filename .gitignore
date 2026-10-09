@@ -1,0 +1,26 @@
+# System & OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Python caches & virtual environments
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+
+# Editor & IDE directories
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Tesseract runtime & temporary working files
+.tesseract-work/
+*.tsrct.tmp
+player/runtime/
+
+# Local workspace agent customizations (to prevent dirty status if cloned as plugin)
+.agents/

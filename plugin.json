@@ -3,6 +3,13 @@
   "name": "tesseract",
   "version": "0.3.1",
   "description": "Tesseract brings professional creative tools into your agent workflow. Work with video layers, compositions, keyframes, and audio in one connected project. Preview the result, direct a revision, and render the finished video locally.",
+  "displayName": "Tesseract by Mirage",
+  "logo": "assets/plugin-icon.svg",
+  "suggestedPrompts": [
+    "Use Tesseract to turn my clips into a 30-second video with music and titles",
+    "Use Tesseract to create an animated motion graphic with custom typography",
+    "Use Tesseract to design a promotional graphic and deliver PNG with editable project"
+  ],
   "author": {
     "name": "Mirage"
   },

@@ -32,10 +32,14 @@ def external(name):
     p = shutil.which(name)
     if p:
         return p
-    for parent in ("/opt/homebrew/bin", "/usr/local/bin"):
+    for parent in ("/opt/homebrew/bin", "/usr/local/bin", r"C:\ffmpeg\bin", r"C:\ProgramData\chocolatey\bin"):
         p = Path(parent) / name
         if p.is_file():
             return str(p)
+        if sys.platform == "win32":
+            p_exe = Path(parent) / f"{name}.exe"
+            if p_exe.is_file():
+                return str(p_exe)
     raise ValueError(f"{name} is needed for media inspection. It was not found locally.")
 
 
@@ -63,8 +67,7 @@ def atomic_run(output, command):
         run(command(temporary))
         if not temporary.is_file() or not temporary.stat().st_size:
             raise RuntimeError("Media command returned without producing a nonempty output.")
-        # Do not overwrite a concurrently-created output.
-        os.link(temporary, p)
+        os.replace(temporary, p)
     return p
 
 

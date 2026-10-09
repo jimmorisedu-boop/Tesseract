@@ -48,10 +48,11 @@ computer, verify its checksum, and confirm it runs.
 Then ask me for my footage or the video I want to make.
 ```
 
-### Plugins
+### Plugins & Agent Integrations
 
-[ChatGPT/Codex plugin →](https://chatgpt.com/plugins/plugins_6ab148f4986c819198f6a08c7fb30f3e?open_in_app)
-Claude Code plugin coming soon
+- [Antigravity Guide & Plugin →](docs/antigravity.md)
+- [ChatGPT/Codex plugin →](https://chatgpt.com/plugins/plugins_6ab148f4986c819198f6a08c7fb30f3e?open_in_app)
+- Claude Code plugin coming soon
 
 ### Manual downloads
 

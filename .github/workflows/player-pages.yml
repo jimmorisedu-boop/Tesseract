@@ -22,7 +22,7 @@ jobs:
       - uses: actions/configure-pages@v5
       - name: Assemble the player with the published runtime
         env:
-          VERSION: 0.3.0
+          VERSION: 0.3.1
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
