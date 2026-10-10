@@ -51,6 +51,8 @@ Then ask me for my footage or the video I want to make.
 ### Plugins & Agent Integrations
 
 - [Antigravity Guide & Plugin →](docs/antigravity.md)
+- [DeepSeek Harness Guide →](docs/deepseek.md)
+- [News-review house style skill →](skills/news-review-video/SKILL.md)
 - [ChatGPT/Codex plugin →](https://chatgpt.com/plugins/plugins_6ab148f4986c819198f6a08c7fb30f3e?open_in_app)
 - Claude Code plugin coming soon
 
@@ -69,12 +71,61 @@ Then ask me for my footage or the video I want to make.
 
 Use the CLI version required by your skills. Install either the plugin or the skills; you don't need both.
 
+## Global Installation & Cross-Project Setup (Запуск из любой папки)
+
+To make Tesseract and its AI skills available across **any project or folder** on your machine:
+
+### 1. Add Tesseract CLI to PATH
+The CLI executable installs to:
+- **Windows**: `$env:LOCALAPPDATA\Tesseract\bin\tsrct.cmd`
+- **macOS**: `~/Library/Application Support/Tesseract/bin/tsrct`
+- **Linux**: `~/.local/share/Tesseract/bin/tsrct`
+
+To run `tsrct` from any terminal directory:
+```powershell
+# Windows PowerShell (User PATH)
+[Environment]::SetEnvironmentVariable(
+    "Path",
+    [Environment]::GetEnvironmentVariable("Path", "User") + ";$env:LOCALAPPDATA\Tesseract\bin",
+    "User"
+)
+```
+```bash
+# macOS / Linux (add to ~/.zshrc or ~/.bashrc)
+export PATH="$HOME/.local/share/Tesseract/bin:$PATH"
+```
+
+### 2. Install Skills Globally for AI Agents
+To allow Antigravity, DeepSeek, or other AI agents to discover Tesseract skills in **any workspace**:
+```powershell
+# Option A: Global shared agents directory (Antigravity & DeepSeek)
+$dst = "$HOME\.agents\skills"
+New-Item -ItemType Directory -Force $dst | Out-Null
+Copy-Item -Recurse -Force "skills\*" $dst
+
+# Option B: Global Antigravity plugin directory
+$pluginDst = "$HOME\.gemini\config\plugins\tesseract"
+New-Item -ItemType Directory -Force $pluginDst | Out-Null
+Copy-Item -Recurse -Force "*" $pluginDst
+```
+
+### 3. Running in a New Project Folder
+In any directory on your computer:
+1. Open the folder in your AI harness (Antigravity, DSH).
+2. Place your raw host footage in the folder.
+3. Prompt your agent to edit the video — it will autonomously source authentic B-roll, assemble the dynamic edit, animate slide-ins ("выезды"), duck sound, and export:
+   - **Master MP4**: Finished 1080p video.
+   - **Tesseract Project**: `.tsrct` non-destructive bundle.
+   - **Adobe Premiere Pro**: Final Cut Pro / Premiere XML (`<project>_premiere.xml`).
+   - **Adobe After Effects**: ExtendScript (`<project>_aftereffects.jsx`) or transparent ProRes 4444 MOV overlays.
+
 ## What you can make
 
 | Skill | Use it for |
 | --- | --- |
-| **Tesseract: Edit Video** | Cut footage, adjust framing, and combine dialogue and music. |
-| **Tesseract: Motion Graphics** | Animate titles, typography, diagrams, and overlays. |
+| **Tesseract: Edit Video** | Cut footage, adjust framing, combine dialogue, duck music, and export to MP4 + Adobe Premiere/AE. |
+| **Tesseract: Motion Graphics** | Animate titles, typography, diagrams, news slide-ins ("выезды"), and overlays. |
+| **News-review house style** | Journalistic news explainers (Sobchak archetype): 2.5–5s pacing, punch-ins, authentic inserts, marker highlights. |
 | **Tesseract: Editor** | Build a custom browser editor for previewing, editing, and saving Tesseract projects. |
 | **Tesseract: Design** | Create static visuals, including posters, social graphics, and UI mockups. |
 

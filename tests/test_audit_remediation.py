@@ -12,6 +12,7 @@ sys.path.insert(0, str(ROOT / "skills" / "tesseract-video" / "scripts"))
 import tesseract_media
 import tesseract_sound
 import tesseract_waveform
+import tesseract_adobe
 
 
 class AuditRemediationTests(unittest.TestCase):
@@ -94,6 +95,60 @@ class AuditRemediationTests(unittest.TestCase):
             self.assertTrue(png_file.is_file())
             self.assertTrue(json_file.is_file())
             self.assertEqual(wf_result["mode"], "speech")
+
+    def test_adobe_premiere_and_aftereffects_export(self):
+        """Test exporting Tesseract project to Premiere Pro XML and After Effects JSX."""
+        with tempfile.TemporaryDirectory(prefix="tsrct-adobe-") as tmp:
+            tmp_path = Path(tmp)
+            xml_file = tmp_path / "seq.xml"
+            jsx_file = tmp_path / "comp.jsx"
+
+            dummy_doc = {
+                "dimensions": {"width": 1920, "height": 1080},
+                "duration": 5.0,
+                "composition": {
+                    "id": "main",
+                    "layers": [
+                        {
+                            "type": "Video",
+                            "name": "Host Footage",
+                            "playback": {"inputRange": {"start": 0, "duration": 5000}},
+                            "sourceRange": {"start": 1000, "duration": 5000},
+                            "source": {"assetId": "host-1"},
+                        },
+                        {
+                            "type": "Rect",
+                            "name": "News Card",
+                            "activeRange": {"start": 1500, "duration": 3000},
+                            "rect": {"size": [700, 200], "fillColor": [1, 1, 1, 1]},
+                            "transform": {"position": [680, 260], "scale": [100, 100]},
+                        },
+                        {
+                            "type": "Text",
+                            "name": "Headline",
+                            "activeRange": {"start": 1500, "duration": 3000},
+                            "sourceText": {"text": "Breaking News", "fontSize": 48},
+                        },
+                    ],
+                },
+            }
+
+            # Export Premiere XML
+            tesseract_adobe.export_premiere_xml(dummy_doc, xml_file, fps=25)
+            self.assertTrue(xml_file.is_file())
+            xml_content = xml_file.read_text(encoding="utf-8")
+            self.assertIn("<xmeml", xml_content)
+            self.assertIn("<sequence>", xml_content)
+            self.assertIn("Host Footage", xml_content)
+
+            # Export After Effects JSX
+            tesseract_adobe.export_aftereffects_jsx(dummy_doc, jsx_file, fps=25)
+            self.assertTrue(jsx_file.is_file())
+            jsx_content = jsx_file.read_text(encoding="utf-8")
+            self.assertIn("app.beginUndoGroup", jsx_content)
+            self.assertIn("app.project.items.addComp", jsx_content)
+            self.assertIn("addText", jsx_content)
+            self.assertIn("Breaking News", jsx_content)
 
 
 if __name__ == "__main__":

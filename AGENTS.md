@@ -1,0 +1,61 @@
+# Tesseract for DeepSeek Harness
+
+Tesseract brings professional video editing, motion graphics, sound design, and static visual composition directly into a DeepSeek Harness (DSH) session. This repository is both the skill source and the runtime's local documentation.
+
+## Available skills
+
+- `tesseract-video`: Edit footage, assemble sequences, match cuts, balance audio, and render final video files.
+- `tesseract-motion`: Create kinetic typography, animated lower-thirds, shape layers, diagrams, and video overlays.
+- `tesseract-design`: Create static graphic designs, posters, social media banners, and UI mockups as PNGs with editable `.tsrct` files.
+- `tesseract-editor`: Build interactive web-based players and editors for `.tsrct` projects using the Tesseract Web runtime.
+
+Install them by copying `skills/*` into a skill root DSH scans — `~/.agents/skills` (shared), `~/.dsh/skills` (DSH-only), or a project-local `.agents/skills` / `.dsh/skills`. DSH discovers `<name>/SKILL.md` one level deep and watches the roots, so no restart is needed. See [docs/deepseek.md](docs/deepseek.md) for the full installation guide.
+
+## CLI runtime execution in DeepSeek Harness
+
+1. **CLI location**:
+   - Windows: `$env:LOCALAPPDATA\Tesseract\bin\tsrct.cmd` (or `tsrct` in PATH).
+   - macOS: `~/Library/Application Support/Tesseract/bin/tsrct`.
+   - Linux: `~/.local/share/Tesseract/bin/tsrct`.
+2. **Version pin**: Check `tsrct --version` against `skills/tesseract-video/references/cli-version.txt` (pinned to `0.3.1`) once per session.
+3. **Non-destructive projects**: Tesseract projects are portable `.tsrct` bundles. Always preserve the `.tsrct` project alongside exported media (MP4, PNG, MOV) so future edits stay editable.
+4. **Previews**: Render quick frames with `tsrct preview --project <path> --time <seconds> --output <path>`; inspect a filmstrip before delivering.
+5. **Workspace sandbox**: DSH confines file writes to the session workspace. Keep projects, imported assets, and renders inside it; writes elsewhere (for example into `%LOCALAPPDATA%` during CLI installation) require an explicit approval.
+
+## Journalistic & Investigative News Editing Standard (YouTube Explainer Archetype)
+
+When producing or editing video in the YouTube news analysis / investigative report style (e.g. *"Осторожно, Собчак"*, benchmark `https://www.youtube.com/watch?v=B5ZqL31RY_w`):
+
+1. **Montage Dynamics & Pacing (2.5–5.0s Cut Rhythm)**:
+   - Never allow a talking-head shot to sit static for longer than 5 seconds without a cut, punch-in, or visual insert.
+   - Alternate between baseline Medium Shot (100%) and Medium-Close digital punch-in (115%–125%) on key thesis statements, ironies, or topic changes.
+   - Preserve strict eyeline continuity across all punch-ins (matching speaker's eye height).
+   - Use J-cuts (audio lead-in) and L-cuts (audio carry-over) to create continuous narrative drive.
+2. **Dynamic Graphic Slide-Ins ("Выезды")**:
+   - **Headline Cards**: Tilted (-2° to +3°) white or dark cards with authentic publisher logos (Reuters, CNN, The Atlantic, Сноб, РБК), sliding in with snappy cubic-bezier easing (`cubicBezier(0.16, 1.0, 0.3, 1.0)`).
+   - **Personality Cutouts**: High-res cutout portraits with transparent PNG backgrounds sliding in on the opposite side of the host with a soft pop/settle.
+   - **Telegram / Social Bubbles**: Platform-authentic chat bubbles with avatars, verification badges, and bolded key quotes.
+   - **Document Highlights**: Scanned decrees, reports, and articles with animated yellow highlighter strokes drawn across key phrases in sync with voiceover.
+   - **Radar & Maps**: Animated flight trajectories, territory lines, and waypoint callouts.
+   - **Framed Archival Video**: Archival footage and speeches placed inside stylized editorial HUD frames with timecodes or in split-screens.
+3. **Mandatory Sourcing of Authentic External Material (Достоверные врезки)**:
+   - Always source and download real third-party assets rather than using generic stock footage.
+   - Use `python -m yt_dlp --download-ranges "*MM:SS-MM:SS"` to extract exact archival footage, speeches, and news clips locally.
+   - Source real high-res publisher logos, official portraits (for cutouts), and real article screenshots.
+   - Conform media with FFmpeg (framerate, 1080p scaling) and store in `assets/inserts/` before importing with `tsrct project import-video` / `import-asset`.
+4. **Synchronized Sound Design**:
+   - Pair every graphic movement with a subtle sound cue: air whoosh on cards, soft pop/shutter on photos, paper rustle on documents, marker squeak on highlights, sub-bass thud on breaking alerts.
+   - Layer an investigative, pulsing ambient music bed ducked by -6 to -10 dB under voice.
+   - Use dramatic silence cuts (complete music dropouts of 150–300 ms) before punchlines, ironies, or cliffhangers.
+5. **Mandatory Output in Adobe Premiere Pro & After Effects Formats**:
+   - Deliverables must always include the project in Adobe-compatible interchange formats alongside the master MP4 and `.tsrct` project bundle:
+     - **Premiere Pro**: Final Cut Pro / Premiere XML (`<project>_premiere.xml`) preserving timeline tracks, cuts, in/out points, and audio mix.
+     - **After Effects**: ExtendScript (`<project>_aftereffects.jsx`) and/or transparent ProRes 4444 MOV overlays (`--format prores --fx-solo`) recreating the composition layers, cards, text, and keyframed motion.
+   - Use `python skills/tesseract-video/scripts/tesseract_adobe.py bundle --input <project.tsrct> --output-dir <output-dir>` to automatically produce both files.
+
+## House style for news-review videos
+
+News roundups, weekly digests, and commentary episodes must follow the `news-review-video`
+skill (`skills/news-review-video/`): block structure, insert cadence, mandatory camera moves on
+every still, sourced third-party inserts with a provenance ledger, and the pacing QC script
+`scripts/measure_pacing.py`.

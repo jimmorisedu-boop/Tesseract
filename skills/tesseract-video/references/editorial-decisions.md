@@ -34,6 +34,27 @@ Keep natural head movement; do not introduce jitter by chasing the eyes frame by
 
 Follow [filmstrip review](filmstrip-review.md) to compare the last outgoing and first incoming frames at the same display size, then play the join at normal speed. Recheck adjacent cuts after changing a shot's framing, including captions and overlays that may now collide with the face. Record any intentional framing change that remains.
 
+## Journalistic & Investigative Montage Dynamics (YouTube News Standard)
+
+For news analysis, investigative reporting, and documentary explainers (the archetype exemplified by *"Осторожно, Собчак"*, *"Редакция"*, and modern YouTube journalism; see [investigative news style](investigative-news-style.md)):
+
+1. **Pacing and Cut Frequency (2.5–5.0 seconds)**:
+   - A talking head must not sit uninterrupted on screen for longer than 5 seconds.
+   - Alternate the visual frame every 2.5 to 5.0 seconds using cuts between baseline framing, digital punch-ins, authentic archival inserts, or slide-in graphic cards ("выезды").
+2. **Punch-In Alternation (Джамп-каты и чередование планов)**:
+   - Alternate between Medium Shot (100% scale) and Medium-Close Punch-in (115%–125% scale).
+   - Reserve punch-ins for rhetorical emphasis, ironical commentary, key thesis statements, or topic shifts.
+   - Strictly maintain eyeline continuity across punch-ins so the speaker’s eyes remain locked to the same horizontal coordinate line.
+3. **Authentic B-Roll Inserts (Достоверные врезки)**:
+   - Dialogue must be richly illustrated with actual archival footage, press briefings, speeches, field reports, and surveillance/court clips.
+   - Never substitute generic or invented stock footage when authentic third-party material can be acquired. Follow [media import](media-import.md) for downloading genuine footage.
+4. **J-Cuts and L-Cuts for Narrative Velocity**:
+   - Use audio lead-ins (J-cuts, 0.5–1.0s) so the sound of the upcoming archival clip or quote begins before the picture cuts.
+   - Use audio carry-overs (L-cuts) so the presenter’s voice flows seamlessly over the beginning of an archival insert or document graphic.
+5. **Graphic Synchronization ("Выезды")**:
+   - Pair every mentioned news headline, quote, or person with an animated slide-in card or cutout portrait on the opposite side of the screen.
+   - Accompany each graphic movement with a subtle, motivated sound accent (whoosh, pop, paper rustle). Follow [motion design](motion-design.md) and [sound design](sound-design.md).
+
 ## A compact plan
 
 For a new edit a table like this is sufficient; keep it proportional to complexity:
@@ -58,3 +79,4 @@ For each beat, consider the sound roles in [sound design](sound-design.md): prim
 - A requested duration is a delivery constraint. Achieve it through selection and timing, not a globally sped-up finished video or unreadably short text.
 
 For a revision, change only the necessary source ranges/layers/animators, retain the existing language, and inspect neighboring beats for continuity.
+

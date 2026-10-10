@@ -5,6 +5,11 @@ description: Create editable motion graphics locally in Tesseract, including ful
 
 # Design motion with Tesseract
 
+For news-review and commentary deliverables, load the `news-review-video` skill and follow its
+house standard before designing graphics (mandatory motion on every still, insert cadence,
+attribution on screen).
+# Design motion with Tesseract
+
 For converting files to or from other editing tools, such as Premiere Pro or After Effects, read [conversion](references/conversion.md). When opening shared or older `.tsrct` files, updating tools, or investigating load/render differences, read [versions and compatibility](references/versions.md).
 
 The CLI may send basic usage telemetry for some commands. You can provide optional attribution via `TESSERACT_SKILL=tesseract-motion` and the [other attribution variables](references/telemetry.md). Respect the CLI's telemetry opt-out setting; never enable telemetry on the user's behalf.
@@ -14,7 +19,7 @@ Create a moving composition with a clear visual idea. Establish what the motion 
 When designing an ad opening, read [ad hooks](references/ad-hooks.md): develop a clear visual idea tied to the actual product/message, align its key arrival to confirmed opening music cues when available, and preview it together with the next scene. Sound and transitions strengthen the idea; they are not a required effects stack.
 
 1. Resolve this skill's root from the directory containing this `SKILL.md`. Read [CLI installation](references/installation.md) and check the required Tesseract version once per session. Use the resolved executable path throughout the task. Read [local operation](references/local-operation.md) and [native authoring](references/native-authoring.md).
-2. Read [motion design](references/motion-design.md). Use the supplied brand/style references. For an overlay, inspect the actual footage at the intended placement and timing; design around the subject, text, and action.
+2. Read [motion design](references/motion-design.md). For journalistic explainers and news analysis (the YouTube news standard; see [investigative news style](references/investigative-news-style.md)), author dynamic slide-in graphics ("выезды"): tilted headline cards with authentic publisher logos, silhouette cutout portraits with transparent PNGs, Telegram/social bubbles, scanned documents with animated yellow highlighter strokes, and interactive radar/map routes. For an overlay, inspect the actual footage at the intended placement and timing; design around the subject, text, and action.
 3. Choose a useful mechanism—typography, paths, masks, precomps, a diagram, or a media treatment. Use native layers and a coordinated AnimationGraph. Existing footage and graphic assets are welcome; a single prerendered image of the design defeats editable motion.
 4. Retrieve the specific definitions needed from `tsrct project schema` or `tsrct project schema --document`. [FX authoring](references/fx-authoring.md) and [motion](references/motion.md) show working wire shapes and local rendering, not mandatory designs. For subject occlusion use actual person mattes when supported, not an approximate hand-drawn silhouette.
 5. When supplied or previously generated music sets the rhythm, read [waveform editing](references/waveform-editing.md): open a music waveform, listen to confirm accents and phrase changes, and map animation arrivals/reveals to the selected music events before authoring timing. Preserve the chosen track; do not mistake every peak for a beat or sync every movement mechanically. Read [sound design](references/sound-design.md) when the graphic is part of an audible video. Add a local accent or transition sound when it strengthens the movement; leave it quiet when speech or the existing mix already carries the moment. Keep sound in separate Audio layers, and use [audio and timing](references/audio-and-timing.md) for importing files, placement, and envelopes. A silent-overlay request stays silent.

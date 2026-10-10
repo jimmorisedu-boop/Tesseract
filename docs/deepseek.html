@@ -1,0 +1,692 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tesseract for DeepSeek Harness | Video, motion graphics, and design</title>
+  <meta name="description" content="Set up Tesseract in DeepSeek Harness. Edit footage, animate motion graphics, create visual designs, and render editable creative projects locally.">
+  <link rel="icon" href="../assets/plugin-icon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      --st-ink: #1d1f20;
+      --st-gray: #616768;
+      --st-light-gray: #e8eff2;
+      --st-line: #e1e7e9;
+      --st-air: #eefbff;
+      --st-blue: #00b7e4;
+      --st-sea: #00d0ff;
+      --st-dark-card: #141515;
+      --ds-blue: #4d6bfe;
+      --ds-air: #eef1ff;
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: var(--font-family);
+      color: var(--st-ink);
+      background-color: #fafbfc;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    header {
+      position: sticky;
+      top: 16px;
+      z-index: 100;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 12px 24px;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--st-line);
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 19px;
+      text-decoration: none;
+      color: var(--st-ink);
+    }
+    .brand svg {
+      width: 28px;
+      height: 28px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--st-air);
+      color: #007d9e;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .badge-ds {
+      background: var(--ds-air);
+      color: #2f45c7;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--st-gray);
+      font-size: 15px;
+      font-weight: 500;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover {
+      color: var(--st-ink);
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.15s ease;
+    }
+    .btn-primary {
+      background: var(--st-ink);
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background: #333638;
+    }
+    .btn-secondary {
+      background: #fff;
+      color: var(--st-ink);
+      border-color: var(--st-line);
+    }
+    .btn-secondary:hover {
+      border-color: #a0a6a8;
+    }
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+    .hero {
+      text-align: center;
+      padding: 60px 0 40px;
+    }
+    .hero h1 {
+      font-size: clamp(38px, 5.5vw, 68px);
+      line-height: 1.1;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      max-width: 900px;
+      margin: 16px auto;
+    }
+    .hero p.lead {
+      font-size: clamp(18px, 2.2vw, 22px);
+      color: var(--st-gray);
+      max-width: 720px;
+      margin: 0 auto 32px;
+    }
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .meta-tags {
+      margin-top: 24px;
+      font-size: 14px;
+      color: var(--st-gray);
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin: 60px 0;
+    }
+    .feature-card {
+      background: #fff;
+      border: 1px solid var(--st-line);
+      border-radius: 20px;
+      padding: 32px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .feature-card:hover {
+      border-color: #9ab9c2;
+      transform: translateY(-2px);
+    }
+    .feature-card h3 {
+      font-size: 22px;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+    .feature-card p {
+      color: var(--st-gray);
+      font-size: 15px;
+    }
+    .section-head {
+      margin-bottom: 32px;
+      text-align: left;
+    }
+    .section-head h2 {
+      font-size: clamp(28px, 3.5vw, 42px);
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .section-head p {
+      color: var(--st-gray);
+      font-size: 17px;
+    }
+    .setup-box {
+      background: var(--st-air);
+      border-radius: 24px;
+      padding: 44px;
+      margin: 40px 0;
+      border: 1px solid #d2eff8;
+    }
+    .steps-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+      margin-bottom: 40px;
+    }
+    .step-item {
+      background: #fff;
+      border: 1px solid #d8eaf0;
+      border-radius: 16px;
+      padding: 24px;
+      position: relative;
+    }
+    .step-num {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 700;
+      color: #007d9e;
+      background: var(--st-air);
+      padding: 3px 8px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+    }
+    .step-item h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+    .step-item p {
+      font-size: 14px;
+      color: var(--st-gray);
+    }
+    .code-block {
+      background: var(--st-dark-card);
+      color: #f1f8fa;
+      border-radius: 16px;
+      padding: 20px 24px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      position: relative;
+      overflow-x: auto;
+      margin: 16px 0;
+      white-space: pre-wrap;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      cursor: pointer;
+      font-family: var(--font-family);
+      font-weight: 500;
+      transition: background 0.15s;
+    }
+    .copy-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+    .prompt-card {
+      background: #fff;
+      border: 1px solid var(--st-line);
+      border-radius: 18px;
+      padding: 28px;
+      margin-bottom: 24px;
+    }
+    .prompt-card h4 {
+      font-size: 18px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .prompt-text {
+      font-size: 15px;
+      color: #2a2e2f;
+      background: #f4f8fa;
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 14px 0;
+      border: 1px solid #e3ebee;
+      white-space: pre-wrap;
+    }
+    .skills-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 32px 0;
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--st-line);
+    }
+    .skills-table th, .skills-table td {
+      padding: 16px 20px;
+      text-align: left;
+      font-size: 14px;
+      border-bottom: 1px solid var(--st-line);
+    }
+    .skills-table th {
+      background: #f7fafb;
+      font-weight: 600;
+      color: var(--st-ink);
+    }
+    .skills-table code {
+      background: #ebf2f5;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+    .faq-grid {
+      display: grid;
+      gap: 16px;
+      margin-top: 24px;
+    }
+    details {
+      background: #fff;
+      border: 1px solid var(--st-line);
+      border-radius: 14px;
+      padding: 18px 24px;
+      transition: border-color 0.2s;
+    }
+    details[open] {
+      border-color: #9ab9c2;
+    }
+    summary {
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    summary::-webkit-details-marker {
+      display: none;
+    }
+    summary::after {
+      content: '+';
+      font-size: 20px;
+      color: var(--st-gray);
+    }
+    details[open] summary::after {
+      content: '−';
+    }
+    details p {
+      margin-top: 12px;
+      color: var(--st-gray);
+      font-size: 14px;
+    }
+    .note {
+      background: var(--ds-air);
+      border: 1px solid #d5dcff;
+      border-radius: 14px;
+      padding: 16px 20px;
+      font-size: 14px;
+      color: #33408f;
+      margin: 16px 0;
+    }
+    footer {
+      text-align: center;
+      padding: 60px 24px 40px;
+      color: var(--st-gray);
+      font-size: 14px;
+      border-top: 1px solid var(--st-line);
+      margin-top: 80px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="#top" class="brand">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+      </svg>
+      <span>Tesseract</span>
+      <span class="badge badge-ds">DeepSeek Harness</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#installation">Installation</a>
+      <a href="#roots">Skill roots</a>
+      <a href="#skills">Skills</a>
+      <a href="#prompts">Prompts</a>
+      <a href="#verify">Verify</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </header>
+
+  <main class="container" id="top">
+    <section class="hero">
+      <span class="badge badge-ds">DeepSeek Harness Agent Skills</span>
+      <h1>Make the video you have in mind, with DeepSeek.</h1>
+      <p class="lead">
+        Direct the edit, motion graphics, and sound through DeepSeek Harness.
+        Tesseract supplies professional creative tools and renders the result locally on your computer.
+      </p>
+      <div class="hero-actions">
+        <a href="#installation" class="btn btn-primary">Set up in DeepSeek Harness →</a>
+        <a href="#prompts" class="btn btn-secondary">Explore Sample Prompts</a>
+      </div>
+      <div class="meta-tags">
+        <span>✓ Windows 10/11 x86_64, macOS, Linux</span>
+        <span>✓ 100% Local Free Rendering Engine</span>
+        <span>✓ No Plugin Manifest Required</span>
+      </div>
+    </section>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <h3>An editable project</h3>
+        <p>Keep your clips, keyframes, typography, and sound synchronized in a portable <code>.tsrct</code> document for non-destructive revisions.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Professional controls</h3>
+        <p>Keyframes, bezier easing, adjustment layers, audio ducking, time remapping, and custom shaders are built-in native capabilities.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Free local rendering</h3>
+        <p>GPU-accelerated rendering executes directly on your machine. No cloud queues, upload delays, or surprise rendering fees.</p>
+      </div>
+    </div>
+
+    <!-- INSTALLATION SECTION -->
+    <section class="setup-box" id="installation">
+      <div class="section-head">
+        <h2>Set up Tesseract for DeepSeek Harness</h2>
+        <p>Three steps, or one prompt the agent can run on its own.</p>
+      </div>
+
+      <div class="steps-list">
+        <div class="step-item">
+          <span class="step-num">Step 01</span>
+          <h3>Open a DSH session</h3>
+          <p>Point the DeepSeek Harness session workspace at the folder holding your footage, audio, images, and fonts.</p>
+        </div>
+        <div class="step-item">
+          <span class="step-num">Step 02</span>
+          <h3>Install the Tesseract skills</h3>
+          <p>Run <code>npx skills add mirage-hq/Tesseract</code>, or copy the four skill bundles into <code>~/.agents/skills</code> or <code>~/.dsh/skills</code>.</p>
+        </div>
+        <div class="step-item">
+          <span class="step-num">Step 03</span>
+          <h3>Direct the first edit</h3>
+          <p>Provide your clips and creative brief. The agent authors the timeline, previews frames, and exports the final MP4.</p>
+        </div>
+      </div>
+
+      <h3 style="margin-bottom: 8px;">Autonomous One-Prompt Agent Setup</h3>
+      <p style="color: var(--st-gray); font-size: 15px; margin-bottom: 12px;">
+        Paste this prompt directly into a DeepSeek Harness session. The agent installs the skills, downloads the matching CLI binary, validates checksums, installs <code>tsrct.cmd</code>, and confirms runtime rendering:
+      </p>
+
+      <div class="code-block">
+        <button class="copy-btn" onclick="copySnippet('agent-setup-prompt', this)">Copy Prompt</button>
+        <span id="agent-setup-prompt">Set up Tesseract by Mirage so you can create editable designs, edit videos, and make motion graphics in this DeepSeek Harness session. Install the four Tesseract skills from https://github.com/mirage-hq/Tesseract into a skill root DSH scans (~/.agents/skills or ~/.dsh/skills), check this system's environment, download the required Tesseract CLI (v0.3.1) matching my architecture, verify the SHA-256 checksum, run the installer, and verify `tsrct --version`. Confirm a short preview renders correctly. Then ask me for my footage or the video/motion project I want to create. Keep the editable .tsrct project and source assets with the finished render.</span>
+      </div>
+
+      <h4 style="margin-top: 28px; margin-bottom: 6px;">One command (shared skills directory)</h4>
+      <div class="code-block">
+        <button class="copy-btn" onclick="copySnippet('cmd-npx', this)">Copy Command</button>
+        <span id="cmd-npx">npx skills add mirage-hq/Tesseract</span>
+      </div>
+
+      <h4 style="margin-top: 28px; margin-bottom: 6px;">Manual installation (PowerShell / Windows)</h4>
+      <div class="code-block">
+        <button class="copy-btn" onclick="copySnippet('cmd-setup-snippet', this)">Copy Command</button>
+        <span id="cmd-setup-snippet">git clone https://github.com/mirage-hq/Tesseract.git "$HOME\Tesseract"
+
+$dst = "$HOME\.agents\skills"   # or: "$HOME\.dsh\skills"
+New-Item -ItemType Directory -Force $dst | Out-Null
+Copy-Item -Recurse -Force "$HOME\Tesseract\skills\*" $dst</span>
+      </div>
+
+      <h4 style="margin-top: 28px; margin-bottom: 6px;">Manual installation (macOS / Linux)</h4>
+      <div class="code-block">
+        <button class="copy-btn" onclick="copySnippet('cmd-setup-bash', this)">Copy Command</button>
+        <span id="cmd-setup-bash">git clone https://github.com/mirage-hq/Tesseract.git ~/Tesseract
+mkdir -p ~/.agents/skills
+cp -R ~/Tesseract/skills/* ~/.agents/skills/</span>
+      </div>
+
+      <div class="note">
+        <strong>Sandbox note:</strong> DeepSeek Harness confines file writes to the session workspace by default. Keep the <code>.tsrct</code> project, imported assets, and renders inside that folder. Installing the CLI runtime under <code>%LOCALAPPDATA%</code> (or the platform equivalent) is outside the workspace, so DSH asks for approval first — that prompt is expected.
+      </div>
+    </section>
+
+    <!-- SKILL ROOTS SECTION -->
+    <section id="roots" style="margin: 60px 0;">
+      <div class="section-head">
+        <h2>Where DeepSeek Harness finds skills</h2>
+        <p>DSH discovers a directory bundle <code>&lt;name&gt;/SKILL.md</code> or a flat <code>&lt;name&gt;.md</code> at the top level of these roots, and watches them — new skills appear without a restart.</p>
+      </div>
+
+      <table class="skills-table">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Root</th>
+            <th>Scope</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>100</td>
+            <td><code>&lt;projectRoot&gt;/.dsh/skills</code></td>
+            <td>DSH-only skills inside one repository</td>
+          </tr>
+          <tr>
+            <td>200</td>
+            <td><code>&lt;projectRoot&gt;/.agents/skills</code></td>
+            <td>Shared project skills</td>
+          </tr>
+          <tr>
+            <td>300</td>
+            <td>configured <code>customSkillDirs</code></td>
+            <td>Extra local roots</td>
+          </tr>
+          <tr>
+            <td>400</td>
+            <td><code>~/.dsh/skills</code></td>
+            <td>Global, DSH-only</td>
+          </tr>
+          <tr>
+            <td>500</td>
+            <td><code>~/.agents/skills</code></td>
+            <td>Global, shared across agents (where <code>npx skills add</code> writes)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p style="color: var(--st-gray); font-size: 15px;">
+        The project root is the nearest ancestor containing <code>.git</code>. Because DSH reads skills straight from disk, Tesseract needs no DSH plugin package — the four skill bundles are the whole integration. For persistent CLI and version rules, add the Tesseract block from <code>docs/deepseek.md</code> to <code>~/.dsh/AGENTS.md</code>.
+      </p>
+    </section>
+
+    <!-- SKILLS SECTION -->
+    <section id="skills" style="margin: 60px 0;">
+      <div class="section-head">
+        <h2>DeepSeek Harness skills included</h2>
+        <p>Four specialized skills equip the session for every creative task.</p>
+      </div>
+
+      <table class="skills-table">
+        <thead>
+          <tr>
+            <th>Skill</th>
+            <th>Role</th>
+            <th>What it handles</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>tesseract-video</code></td>
+            <td>Full Video Assembly</td>
+            <td>Trimming clips, eyeline continuity, pacing cuts to music, dialogue audio ducking, and MP4 rendering.</td>
+          </tr>
+          <tr>
+            <td><code>tesseract-motion</code></td>
+            <td>Motion Graphics &amp; FX</td>
+            <td>Animated title sequences, kinetic typography, lower thirds, vector diagrams, and video overlays.</td>
+          </tr>
+          <tr>
+            <td><code>tesseract-design</code></td>
+            <td>Static Visual Design</td>
+            <td>Creating posters, social media banners, YouTube thumbnails, and slide layouts as PNGs with editable .tsrct files.</td>
+          </tr>
+          <tr>
+            <td><code>tesseract-editor</code></td>
+            <td>Browser-Based Player</td>
+            <td>Building and embedding custom web preview players and interactive HTML timeline editors.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- PROMPTS SECTION -->
+    <section id="prompts" style="margin: 60px 0;">
+      <div class="section-head">
+        <h2>Start small. Make a change you can see.</h2>
+        <p>Try these creative briefs in your DeepSeek Harness conversation.</p>
+      </div>
+
+      <div class="prompt-card">
+        <h4>🎬 10-Second Video Assembly</h4>
+        <div class="prompt-text" id="p1">Use Tesseract to make a 10-second video from the footage in this folder. Start with a strong opening, add a short animated title, keep dialogue clear with audio ducking, and show me a preview before the final render. Keep the .tsrct project editable so we can revise the timing, graphics, and sound.</div>
+        <button class="btn btn-secondary" onclick="copySnippet('p1', this)">Copy Brief</button>
+      </div>
+
+      <div class="prompt-card">
+        <h4>✨ Kinetic Typography &amp; Motion Diagram</h4>
+        <div class="prompt-text" id="p2">Use Tesseract to animate a diagram of these 3 steps. Use our brand colors (#1D1F20 and #00D0FF), add a subtle entrance sound effect, and export both a preview and the editable .tsrct project.</div>
+        <button class="btn btn-secondary" onclick="copySnippet('p2', this)">Copy Brief</button>
+      </div>
+
+      <div class="prompt-card">
+        <h4>🎨 Social Media Banner / Poster</h4>
+        <div class="prompt-text" id="p3">Use Tesseract to design a promotional graphic to accompany this video. Match its typography and colors. Deliver the PNG and the editable .tsrct document.</div>
+        <button class="btn btn-secondary" onclick="copySnippet('p3', this)">Copy Brief</button>
+      </div>
+
+      <div class="prompt-card">
+        <h4>🔄 Adobe Premiere / After Effects Conversion</h4>
+        <div class="prompt-text" id="p4">Use Tesseract to import this Premiere Pro project and its linked media. List its sequences so I can choose one, explain any conversion limitations, and show me a preview before making changes. Keep the original project unchanged.</div>
+        <button class="btn btn-secondary" onclick="copySnippet('p4', this)">Copy Brief</button>
+      </div>
+    </section>
+
+    <!-- VERIFY SECTION -->
+    <section id="verify" style="margin: 60px 0;">
+      <div class="section-head">
+        <h2>Verify the installation</h2>
+        <p>Run these in the DeepSeek Harness session, from your project folder.</p>
+      </div>
+
+      <div class="code-block">
+        <button class="copy-btn" onclick="copySnippet('cmd-verify', this)">Copy Command</button>
+        <span id="cmd-verify">& "$env:LOCALAPPDATA\Tesseract\bin\tsrct.cmd" --version      # expect: tsrct 0.3.1 (&lt;revision&gt;)
+& "$env:LOCALAPPDATA\Tesseract\bin\tsrct.cmd" project create -p smoke.tsrct
+& "$env:LOCALAPPDATA\Tesseract\bin\tsrct.cmd" preview -p smoke.tsrct -t 0.5 -o smoke-frame.png</span>
+      </div>
+
+      <p style="color: var(--st-gray); font-size: 15px;">
+        A freshly created project is empty, so its first frame is a transparent PNG at the composition size — that already proves the renderer runs. To confirm real content renders, apply a rectangle action batch and preview again; the frame must contain the blue card (400×160 px at <code>(80,80)</code>, RGBA <code>[0.05,0.25,0.8,1]</code>). The full command sequence is in <code>docs/deepseek.md</code>.
+      </p>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section id="faq" style="margin: 60px 0;">
+      <div class="section-head">
+        <h2>Frequently Asked Questions</h2>
+      </div>
+
+      <div class="faq-grid">
+        <details>
+          <summary>Does this work in DeepSeek Harness?</summary>
+          <p>Yes. DSH has local shell execution, workspace file access, and GPU access, so the Tesseract CLI (<code>tsrct.cmd</code> / <code>tsrct</code>) runs locally with full acceleration, and the skills are discovered straight from disk.</p>
+        </details>
+        <details>
+          <summary>Do I need a DSH plugin or manifest?</summary>
+          <p>No. DSH scans <code>~/.agents/skills</code>, <code>~/.dsh/skills</code>, and the project-local <code>.agents/skills</code> / <code>.dsh/skills</code> roots. Copying the four skill bundles is the complete integration — no restart required.</p>
+        </details>
+        <details>
+          <summary>Will it use my own media files?</summary>
+          <p>Yes. Place your video files, audio tracks, fonts, and images in the session workspace and tell the agent which files to use. Tesseract packages them into the project as editable assets.</p>
+        </details>
+        <details>
+          <summary>Where is the CLI runtime installed?</summary>
+          <p>On Windows, the runtime installs to <code>%LOCALAPPDATA%\Tesseract\bin\tsrct.cmd</code>. On macOS, <code>~/Library/Application Support/Tesseract/bin/tsrct</code>. On Linux, <code>~/.local/share/Tesseract/bin/tsrct</code>.</p>
+        </details>
+        <details>
+          <summary>Why does the agent ask for approval during setup?</summary>
+          <p>The runtime lives outside the DSH session workspace, and DSH confines writes to the workspace by default, so the install step needs an explicit approval. Skills themselves only need a user-level skill root.</p>
+        </details>
+        <details>
+          <summary>Do I need both the plugin and the skills?</summary>
+          <p>No. Installing Tesseract as skills registers all four capabilities (<code>tesseract-video</code>, <code>tesseract-motion</code>, <code>tesseract-design</code>, <code>tesseract-editor</code>) plus the runtime guidance. You don't need both.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 Mirage / DeepSeek Harness Integration. Tesseract is developed by NOCAP, Inc. d/b/a Mirage.</p>
+    <p style="margin-top: 8px;">Documentation adapted for DeepSeek Harness (DSH).</p>
+  </footer>
+
+  <script>
+    function copySnippet(id, btn) {
+      const el = document.getElementById(id);
+      const text = el ? (el.innerText || el.textContent) : '';
+      navigator.clipboard.writeText(text.trim()).then(() => {
+        const orig = btn.innerText;
+        btn.innerText = 'Copied! ✓';
+        btn.style.borderColor = '#00d0ff';
+        setTimeout(() => {
+          btn.innerText = orig;
+          btn.style.borderColor = '';
+        }, 2200);
+      });
+    }
+  </script>
+</body>
+</html>

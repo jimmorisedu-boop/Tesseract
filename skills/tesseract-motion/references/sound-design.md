@@ -42,6 +42,24 @@ The relative duck is a multiplier: −3 dB ≈ 0.708 and −6 dB ≈ 0.501. Appl
 
 An 80–200 ms pause in music and background texture before a reveal can create contrast. Treat it as an option to audition, not a universal retention technique. Preserve any word or authentic sound carrying the meaning. If actual silence is intended, account for all audible layers and lingering tails; muting music alone may not create silence. Short 5–20 ms ramps can avoid clicks while still feeling abrupt. Let the reveal's cue/music return make the payoff legible.
 
+## Sound Design for Journalistic & News Analysis Edits
+
+In investigative news and explainer formats (e.g. *"Осторожно, Собчак"*; see [investigative news style](investigative-news-style.md)):
+
+1. **Synchronized Graphic SFX Palette**:
+   - Every animated graphic element must have a corresponding, subtle sound cue:
+     - **Headline card slide-ins**: energetic, clean air whoosh / swish (180–250 ms, -12 to -16 dB relative to voice).
+     - **Personality photo cutouts**: soft pop, camera shutter, or subtle mechanical click (80–150 ms, -14 to -18 dB).
+     - **Telegram / social post bubbles**: clean digital UI pop or tap (60–100 ms).
+     - **Document marker highlights**: soft marker squeak or subtle paper rustle (300–600 ms).
+     - **Breaking alerts & chapter shifts**: low sub-bass impact thud or news stinger (-8 to -12 dB).
+2. **Investigative Background Music Bed**:
+   - Use a pulsing, rhythmic, low-key electronic or acoustic tension bed.
+   - Duck by **-6 to -10 dB** under dialogue, beginning 40–80 ms before speech and recovering over 200–350 ms after speech breaks.
+3. **The Ironic / Dramatic Silence Cut (Dropouts)**:
+   - Cut music to **instant zero volume** for 150–300 ms immediately before a surprising revelation, paradoxical fact, or sarcastic quip.
+   - Bring music back on the punchline or next cut with a fresh beat or accent.
+
 ## Frequency and mobile translation
 
 - Protect the speech's presence, broadly in the mids. Start with level and arrangement before EQ; do not remove the entire 500 Hz–4 kHz region from every background track.
