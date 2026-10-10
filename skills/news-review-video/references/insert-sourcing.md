@@ -130,6 +130,7 @@ Invoke-WebRequest "<URL>" -OutFile "assets\raw\<publisher>-<slug>.<ext>" -UserAg
   assets/raw/        исходники как скачаны (не перезаписывать)
   assets/work/       подготовленные: нарезка, стабилизация, апскейл
   assets/sources.json
+  graphics/<блок>/   композиции графики (HyperFrames) и их рендеры
   episode.tsrct
   render/episode-1080p.mp4
 ```
