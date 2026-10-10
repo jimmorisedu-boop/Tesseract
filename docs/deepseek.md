@@ -165,6 +165,36 @@ mandatory camera moves on every still, sourced third-party inserts with a proven
 are calibrated against the reference episode. Install it the same way as the others (copy
 `skills/news-review-video` into `~/.agents/skills`), and point your user-global
 `~/.dsh/AGENTS.md` at it so every session applies the standard.
+## Graphics: built as code, composited as overlays
+
+On-screen graphics are code, not timeline layers. Lower thirds, headline cards, stat
+count-ups, quotes, maps and highlights are authored as HTML/CSS/SVG + GSAP compositions
+(HyperFrames), rendered to video and composited inside the Tesseract project:
+
+```sh
+# 1. alpha overlay for graphics that sit over footage (ProRes 4444, real alpha)
+cd graphics/blok-03-plashka
+npx hyperframes check
+npx hyperframes render . --format mov -q high -o renders/overlay.mov
+
+# 2. bring it into the edit and put it above the footage
+tsrct project import-video --project episode.tsrct \
+  --file renders/overlay.mov --asset-id gfx-blok03-plashka
+
+# 3. render the episode
+tsrct export --project episode.tsrct --output episode.mp4 --format mp4 --resolution 1080p --fps 30
+```
+
+Two constraints worth knowing: `import-video` accepts only MP4, MOV and M4V — an alpha WebM
+is rejected — and `--resolution 4k` cannot be combined with `--format mov`/`webm`, because
+that path has no alpha channel. Render alpha at the native resolution instead.
+
+Verified on this machine (HyperFrames 0.8.145, Node v25.2.1, tsrct 0.3.1): a 3-second render
+came out as `prores / yuva444p12le` with real alpha (1,932,882 transparent pixels), and the
+imported layer composited over footage with the transparent areas showing the video
+underneath. Full standard, measured motion norms and the bans against a generated look:
+`skills/news-review-video/references/graphics-pipeline.md`.
+
 ## Runtime CLI requirements
 
 - **Windows**: 64-bit Windows 10 or later (`%LOCALAPPDATA%\Tesseract\bin\tsrct.cmd`).

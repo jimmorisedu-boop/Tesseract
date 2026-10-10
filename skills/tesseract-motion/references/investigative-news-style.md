@@ -8,6 +8,17 @@ and a script that checks a finished render against those numbers, see
 [news-review house standard](../../news-review-video/references/style-standard.md) and
 `news-review-video/scripts/measure_pacing.py`. The two documents agree: a hard *visual* change
 lands every 2.5–5 s, while pure hard *cuts* in the reference body run 5–12 per minute.
+
+**How the graphics get built (current standard).** Everything described below — lower thirds,
+headline cards, cutout portraits, maps, stat callouts, highlights — is built as a **code
+composition** (HTML/CSS/SVG + GSAP in HyperFrames), rendered to video, and composited in the
+Tesseract project: an **alpha overlay** (`--format mov`, ProRes 4444) for anything that sits over
+footage, a **full-frame MP4** for diagrams, timelines and charts. Do not assemble these visuals
+from native rectangle and text layers in the NLE — that is what reads as a template. The verified
+command chain, engine constraints, measured motion norms (easing, text dwell, stagger, camera
+push, accent share) and the bans against a generated look live in
+[news-review graphics pipeline](../../news-review-video/references/graphics-pipeline.md).
+
 ---
 
 ## 1. Core Visual Anatomy & Screen Partitioning

@@ -1,6 +1,6 @@
 ---
 name: news-review-video
-description: House standard for news-review and commentary videos — the Russian "разбор новостей" format — covering block structure, insert cadence, on-screen graphics, mandatory camera moves on every still, sound design, and sourced third-party inserts with a provenance ledger. Use for news roundups, weekly digests, commentary and reaction formats, and any request to make a video "как новостной выпуск", "как у Собчак", "с врезками и выездами", or to package footage into a news-style episode. Pair with tesseract-video for assembly and tesseract-motion for graphics.
+description: House standard for news-review and commentary videos — the Russian "разбор новостей" format — covering block structure, insert cadence, on-screen graphics built as code and composited as alpha overlays, mandatory camera moves on every still, sound design, and sourced third-party inserts with a provenance ledger. Use for news roundups, weekly digests, commentary and reaction formats, and any request to make a video "как новостной выпуск", "как у Собчак", "с врезками и выездами", or to package footage into a news-style episode. Pair with tesseract-video for assembly and tesseract-motion for graphics.
 ---
 
 # Новостной разбор: обязательный стандарт выпуска
@@ -20,15 +20,24 @@ description: House standard for news-review and commentary videos — the Russia
 2. [Поиск и загрузка стороннего материала](references/insert-sourcing.md) — откуда брать
    достоверные врезки, как их скачивать, как вести ledger источников.
 3. [Чек-лист приёмки](references/qc-checklist.md) — что проверить до выдачи результата.
-4. `scripts/measure_pacing.py` — инструмент, которым темп монтажа проверяется по факту.
-5. Смежные справочники скиллов Tesseract (лежат рядом, в `~/.agents/skills/`):
+4. [Графика: сборка кодом и композит в Tesseract](references/graphics-pipeline.md) —
+   обязательный пайплайн графики: HyperFrames → оверлей с альфой или полный кадр →
+   композит в проекте, измеренные нормы движения и список запретов.
+   Рабочий пример композиции плашки со всеми нормами внутри —
+   `examples/news-lower-third/`.
+5. `scripts/measure_pacing.py` — инструмент, которым темп монтажа проверяется по факту.
+6. Смежные справочники скиллов Tesseract (лежат рядом, в `~/.agents/skills/`):
    - `tesseract-video/references/investigative-news-style.md` — каталог «выездов», плашек,
      вырезок, карт, подсветок и звуковых акцентов для журналистского формата;
    - `tesseract-video/references/media-import.md` — импорт видео, картинок и звука в проект;
    - `tesseract-video/references/motion-design.md`, `sound-design.md`,
      `editorial-decisions.md` — графика, звук и выбор трактовки;
    - `tesseract-video/scripts/tesseract_adobe.py` — экспорт таймлайна в Premiere Pro (XML)
-     и After Effects (JSX / ProRes 4444).
+     и After Effects (JSX / ProRes 4444);
+   - скиллы движка графики: `motion-graphics` (юнит графики до ~10 с),
+     `hyperframes-registry` (готовые блоки — искать до ручной сборки),
+     `hyperframes-animation` (правила движения), `hyperframes-keyframes` (наезды, панчи),
+     `hyperframes-cli` (рендер и проверки).
 
 ## Порядок работы
 
@@ -44,8 +53,13 @@ description: House standard for news-review and commentary videos — the Russia
    Факты, цифры, имена и должности — только из первоисточников.
 5. **Сборка.** Работай по `tesseract-video`: импортируй материал в проект, ставь слои,
    сохраняй `.tsrct`. Для каждого стоп-кадра, фото и скриншота сразу назначай движение.
-6. **Графика.** Работай по `tesseract-motion`: карточки блоков, нижние плашки, цитаты,
-   карты, цифры, подсветки на скриншотах.
+6. **Графика.** Собирай графику кодом (HTML/CSS/SVG + GSAP в HyperFrames) и компонуй её в
+   проекте: оверлей с альфой (`--format mov`, ProRes 4444) поверх футажа — для карточек,
+   плашек, цифр, цитат, карт и подсветок; полноэкранный MP4 — для схем, таймлайнов и
+   графиков. До сборки ищи готовый блок в реестре HyperFrames. Порядок: `npx hyperframes
+   check` → рендер → `tsrct project import-video` → Video-слой над футажом. Нативные слои
+   Tesseract — только для мелких правок, не для графики выпуска. Цепочка команд, нормы
+   движения и запреты — `references/graphics-pipeline.md`.
 7. **Проверка.** Прогони `scripts/measure_pacing.py` по рендеру и чек-лист приёмки.
    Не выдавай результат, пока все пункты не пройдены или отклонения не объяснены.
 8. **Выдача.** Видео + `.tsrct` + `assets/sources.json` + экспорт в Adobe (Premiere Pro XML и
@@ -63,6 +77,10 @@ description: House standard for news-review and commentary videos — the Russia
   тип, основание использования, отметка проверки.
 - **Движение на врезке задаётся явно**: наезд 100→110–115 %, выезд 115→100 %, панорама
   по длинному скриншоту, подсветка фрагмента. Скорость 3–6 % масштаба в секунду.
+- **Графика — код, а не шаблон.** Плашки, цифры, цитаты, карты и подсветки собираются
+  композицией HyperFrames и приходят в проект оверлеем с альфой. Запрещены свечение,
+  стекло, многоцветные градиенты, эмодзи, частицы, тряска камеры и пружинный отскок —
+  полный список в `references/graphics-pipeline.md` §6.
 - **Звук под речь.** Музыкальная подложка с ducking −12…−18 дБ под VO, вжухи на резах и
   появлениях графики, импакт на смене блока, тишина перед ключевой цифрой.
 - **Атрибуция на экране.** У врезки — источник и дата мелким текстом; в ledger — полная
@@ -79,3 +97,8 @@ description: House standard for news-review and commentary videos — the Russia
 - Музыка поверх речи без ducking или с обрывом на монтажном стыке.
 - Отсутствие интро-тизера или «сухое» начало без крючка.
 - Выдача без проверки темпа и без ledger.
+- Графика из нативных прямоугольников и текстовых слоёв NLE: выглядит как шаблон.
+- Оверлей, отрендеренный без альфы: чёрный прямоугольник поверх футажа.
+- Свечение, стекло, многоцветные градиенты, эмодзи, взрывы частиц в плашках.
+- Один и тот же приём появления графики дважды подряд.
+- WebM с альфой для Tesseract: `import-video` принимает только MP4, MOV, M4V.

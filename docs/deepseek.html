@@ -625,6 +625,41 @@ cp -R ~/Tesseract/skills/* ~/.agents/skills/</span>
         workflow (yt-dlp, headless screenshots, ledger schema), and the acceptance checklist.
       </div>
     </section>
+    <!-- GRAPHICS SECTION -->
+    <section id="graphics" style="margin: 60px 0;">
+      <div class="section-head">
+        <h2>Graphics: built as code, composited as overlays</h2>
+        <p>On-screen graphics are code, not timeline layers — the difference between a modern explainer and a template.</p>
+      </div>
+
+      <p style="color: var(--st-gray); font-size: 15px;">
+        Lower thirds, headline cards, stat count-ups, quotes, maps and highlights are authored as
+        HTML/CSS/SVG + GSAP compositions (HyperFrames), rendered to video, and composited inside the
+        Tesseract project. An <strong>alpha overlay</strong> carries anything that sits over footage;
+        a <strong>full-frame MP4</strong> carries diagrams, timelines and charts.
+      </p>
+
+      <table class="skills-table">
+        <thead>
+          <tr><th>Step</th><th>Command</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Check the composition</td><td><code>npx hyperframes check</code></td></tr>
+          <tr><td>Render the overlay (ProRes 4444, real alpha)</td><td><code>npx hyperframes render . --format mov -q high -o renders/overlay.mov</code></td></tr>
+          <tr><td>Bring it into the edit</td><td><code>tsrct project import-video --project episode.tsrct --file renders/overlay.mov --asset-id gfx-plashka</code></td></tr>
+          <tr><td>Render the episode</td><td><code>tsrct export --project episode.tsrct --output episode.mp4 --format mp4 --resolution 1080p --fps 30</code></td></tr>
+        </tbody>
+      </table>
+
+      <div class="note">
+        <strong>Two constraints worth knowing:</strong> <code>import-video</code> accepts only MP4, MOV and M4V — an alpha
+        WebM is rejected — and <code>--resolution 4k</code> cannot be combined with <code>--format mov</code>/<code>webm</code>,
+        because that path has no alpha channel. Verified on this machine (HyperFrames 0.8.145, Node v25.2.1,
+        tsrct 0.3.1): a 3-second render came out as <code>prores / yuva444p12le</code> and composited over footage
+        with the transparent areas showing the video underneath.
+      </div>
+    </section>
+
     <!-- PROMPTS SECTION -->
     <section id="prompts" style="margin: 60px 0;">
       <div class="section-head">

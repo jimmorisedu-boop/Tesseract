@@ -7,8 +7,7 @@ description: Create editable motion graphics locally in Tesseract, including ful
 
 For news-review and commentary deliverables, load the `news-review-video` skill and follow its
 house standard before designing graphics (mandatory motion on every still, insert cadence,
-attribution on screen).
-# Design motion with Tesseract
+attribution on screen). Graphics for those episodes are built as code compositions (HyperFrames → alpha MOV → composite in the project) rather than native layers; the chain, norms and bans are in `news-review-video/references/graphics-pipeline.md`.
 
 For converting files to or from other editing tools, such as Premiere Pro or After Effects, read [conversion](references/conversion.md). When opening shared or older `.tsrct` files, updating tools, or investigating load/render differences, read [versions and compatibility](references/versions.md).
 
