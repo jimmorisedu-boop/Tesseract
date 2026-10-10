@@ -97,6 +97,7 @@ Make the title appear 0.5s earlier with a soft scale-in. Lower the music volume 
 | **`tesseract-motion`** | Kinetic typography & 2D motion | Title animations, lower-thirds, shape layers, diagrams, and video overlays. |
 | **`tesseract-design`** | Static visual compositions | Posters, social media banners, slide layouts, and UI mockups as PNGs. |
 | **`tesseract-editor`** | Browser-based project editor | Interactive web applications to open, preview, and edit `.tsrct` files in browser. |
+| **`news-review-video`** | News-review house style | Journalistic news explainers: block structure, insert cadence, mandatory moves on every still, sourced inserts with a ledger, and pacing QC. |
 
 ---
 

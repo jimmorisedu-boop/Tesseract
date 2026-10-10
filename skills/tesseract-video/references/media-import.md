@@ -39,12 +39,14 @@ When referencing actual news events, speeches, press conferences, court sessions
 
 ```sh
 # Download only the specific needed segment (e.g. from 01:20 to 01:50) at 1080p or 720p:
-python -m yt_dlp --download-ranges "*01:20-01:50" \
+yt-dlp --download-sections "*01:20-01:50" \
   -f "bestvideo[height<=1080]+bestaudio/best[height<=1080]" \
   --force-keyframes-at-cuts \
   -o "assets/inserts/footage/speech_clip.mp4" \
   "<VIDEO_URL>"
 ```
+
+Time ranges require `--download-sections`; `--download-ranges` only covers byte ranges. On Windows the binary is `%LOCALAPPDATA%\Programs\yt-dlp\yt-dlp.exe`; `python -m yt_dlp` works only where that module is installed.
 
 ### 2. Conforming Footage with FFmpeg
 Raw downloaded clips may have mismatched framerates, odd aspect ratios, or audio imbalances. Conform them before import:

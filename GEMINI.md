@@ -8,6 +8,7 @@ Tesseract brings professional video editing, motion graphics, sound design, and 
 - `tesseract-motion`: Create kinetic typography, animated lower-thirds, shape layers, diagrams, and video overlays.
 - `tesseract-design`: Create static graphic designs, posters, social media banners, and UI mockups as PNGs with editable `.tsrct` files.
 - `tesseract-editor`: Build interactive web-based players and editors for `.tsrct` projects using the Tesseract Web runtime.
+- `news-review-video`: House standard for news-review and commentary episodes — block structure, insert cadence, mandatory moves on every still, sourced inserts with a provenance ledger, and pacing QC before delivery.
 
 ## CLI Runtime Execution in Antigravity
 
@@ -37,7 +38,7 @@ When producing or editing video in the YouTube news analysis / investigative rep
    - **Framed Archival Video**: Archival footage and speeches placed inside stylized editorial HUD frames with timecodes or in split-screens.
 3. **Mandatory Sourcing of Authentic External Material (Достоверные врезки)**:
    - Always source and download real third-party assets rather than using generic stock footage.
-   - Use `python -m yt_dlp --download-ranges "*MM:SS-MM:SS"` to extract exact archival footage, speeches, and news clips locally.
+   - Use `yt-dlp --download-sections "*MM:SS-MM:SS"` (Windows: `%LOCALAPPDATA%\Programs\yt-dlp\yt-dlp.exe`) to extract exact archival footage, speeches, and news clips locally. Note: `--download-ranges` covers byte ranges, not time ranges, and `python -m yt_dlp` only works where that module is installed.
    - Source real high-res publisher logos, official portraits (for cutouts), and real article screenshots.
    - Conform media with FFmpeg (framerate, 1080p scaling) and store in `assets/inserts/` before importing with `tsrct project import-video` / `import-asset`.
 4. **Synchronized Sound Design**:
@@ -49,5 +50,10 @@ When producing or editing video in the YouTube news analysis / investigative rep
      - **Premiere Pro**: Final Cut Pro / Premiere XML (`<project>_premiere.xml`) preserving timeline tracks, cuts, in/out points, and audio mix.
      - **After Effects**: ExtendScript (`<project>_aftereffects.jsx`) and/or transparent ProRes 4444 MOV overlays (`--format prores --fx-solo`) recreating the composition layers, cards, text, and keyframed motion.
    - Use `python skills/tesseract-video/scripts/tesseract_adobe.py bundle --input <project.tsrct> --output-dir <output-dir>` to automatically produce both files.
+6. **Measured Benchmark & Pacing QC**:
+   - The rules above are qualitative. The measured profile of the benchmark episode lives in `skills/news-review-video/references/style-standard.md`: intro teaser ≈ 26 cuts/min, body 5–12 cuts/min, no frozen frame ≥ 2 s, narration ≈ 140 words/min, blocks 26–247 s.
+   - Read that standard before assembling a full episode, and load the `news-review-video` skill for the workflow, sourcing ledger, and acceptance checklist.
+   - "Change the visual every 2.5–5 s" means any change — hard cut, punch-in, slide-in, cutout, highlight — while pure hard cuts in the body run 5–12 per minute.
+   - Check a finished render with `python skills/news-review-video/scripts/measure_pacing.py <render.mp4> --intro 66` and deliver the report with the episode.
 
 

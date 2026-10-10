@@ -2,6 +2,12 @@
 
 This reference defines the editing, motion graphics, asset sourcing, and sound design principles for high-engagement journalistic analysis, investigative reporting, and news explainer formats (such as *"Осторожно, Собчак"*, *"Редакция"*, Vox/Johnny Harris explainers, and Bloomberg Quicktake). Reference benchmark: [YouTube News Analysis Format](https://www.youtube.com/watch?v=B5ZqL31RY_w).
 
+**Measured benchmark.** The rules below are qualitative. For the measured profile of that
+reference episode — cuts per minute, median shot length, frozen-frame tolerance, narration rate —
+and a script that checks a finished render against those numbers, see
+[news-review house standard](../../news-review-video/references/style-standard.md) and
+`news-review-video/scripts/measure_pacing.py`. The two documents agree: a hard *visual* change
+lands every 2.5–5 s, while pure hard *cuts* in the reference body run 5–12 per minute.
 ---
 
 ## 1. Core Visual Anatomy & Screen Partitioning
@@ -153,18 +159,20 @@ Authenticity is the foundation of journalistic credibility. Never substitute gen
    - Scribe or capture real news articles and screenshots with real dates and headlines.
 
 ### Command-Line Sourcing Workflow
-Use local tools (`python -m yt_dlp`, `curl`, `ffmpeg`, python scripts) to gather and conform materials directly into the project workspace:
+Use local tools (`yt-dlp`, `curl`, `ffmpeg`, python scripts; on Windows the yt-dlp binary is `%LOCALAPPDATA%\Programs\yt-dlp\yt-dlp.exe`) to gather and conform materials directly into the project workspace:
 
 #### 1. Targeted Clip Extraction with `yt-dlp`
 Download only the precise seconds needed to save bandwidth and storage:
 ```sh
 # Download exact time section (e.g. 01:15 to 01:45) in 1080p or 720p:
-python -m yt_dlp --download-ranges "*01:15-01:45" \
+yt-dlp --download-sections "*01:15-01:45" \
   -f "bestvideo[height<=1080]+bestaudio/best[height<=1080]" \
   --force-keyframes-at-cuts \
   -o "assets/inserts/footage/flydubai_landing.mp4" \
   "<YOUTUBE_OR_SOURCE_URL>"
 ```
+
+Time ranges require `--download-sections`; `--download-ranges` only covers byte ranges. On Windows the binary is `%LOCALAPPDATA%\Programs\yt-dlp\yt-dlp.exe`; `python -m yt_dlp` works only where that module is installed.
 
 #### 2. Media Conforming with FFmpeg
 Ensure all downloaded B-roll conforms to project frame rate (e.g. 25 or 30 fps), resolution, and audio levels:

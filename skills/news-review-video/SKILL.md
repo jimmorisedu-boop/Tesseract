@@ -1,6 +1,6 @@
 ---
 name: news-review-video
-description: House standard for news-review and commentary videos — the Russian "разбор новостей" format: block structure, insert cadence, on-screen graphics, mandatory camera moves on every still, sound design, and sourced third-party inserts with a provenance ledger. Use for news roundups, weekly digests, commentary/reaction formats, and any request to make a video "как новостной выпуск", "как у Собчак", "с врезками и выездами", or to package footage into a news-style episode. Pair with tesseract-video for assembly and tesseract-motion for graphics.
+description: House standard for news-review and commentary videos — the Russian "разбор новостей" format — covering block structure, insert cadence, on-screen graphics, mandatory camera moves on every still, sound design, and sourced third-party inserts with a provenance ledger. Use for news roundups, weekly digests, commentary and reaction formats, and any request to make a video "как новостной выпуск", "как у Собчак", "с врезками и выездами", or to package footage into a news-style episode. Pair with tesseract-video for assembly and tesseract-motion for graphics.
 ---
 
 # Новостной разбор: обязательный стандарт выпуска
@@ -21,6 +21,14 @@ description: House standard for news-review and commentary videos — the Russia
    достоверные врезки, как их скачивать, как вести ledger источников.
 3. [Чек-лист приёмки](references/qc-checklist.md) — что проверить до выдачи результата.
 4. `scripts/measure_pacing.py` — инструмент, которым темп монтажа проверяется по факту.
+5. Смежные справочники скиллов Tesseract (лежат рядом, в `~/.agents/skills/`):
+   - `tesseract-video/references/investigative-news-style.md` — каталог «выездов», плашек,
+     вырезок, карт, подсветок и звуковых акцентов для журналистского формата;
+   - `tesseract-video/references/media-import.md` — импорт видео, картинок и звука в проект;
+   - `tesseract-video/references/motion-design.md`, `sound-design.md`,
+     `editorial-decisions.md` — графика, звук и выбор трактовки;
+   - `tesseract-video/scripts/tesseract_adobe.py` — экспорт таймлайна в Premiere Pro (XML)
+     и After Effects (JSX / ProRes 4444).
 
 ## Порядок работы
 
@@ -40,9 +48,9 @@ description: House standard for news-review and commentary videos — the Russia
    карты, цифры, подсветки на скриншотах.
 7. **Проверка.** Прогони `scripts/measure_pacing.py` по рендеру и чек-лист приёмки.
    Не выдавай результат, пока все пункты не пройдены или отклонения не объяснены.
-8. **Выдача.** Видео + `.tsrct` + `assets/sources.json` + экспорт в Adobe (Premiere Pro XML и After Effects JSX через `tesseract_adobe.py`) + короткий отчёт: что проверено,
+8. **Выдача.** Видео + `.tsrct` + `assets/sources.json` + экспорт в Adobe (Premiere Pro XML и
+   After Effects JSX/MOV через `tesseract_adobe.py`) + короткий отчёт: что проверено,
    какие источники использованы, какие отклонения от стандарта и почему.
-
 
 ## Жёсткие правила
 

@@ -42,7 +42,7 @@ Select the four Tesseract skills. The installer writes them to `~/.agents/skills
 # 1. Get the skills (a clone, a release ZIP, or an existing checkout)
 git clone https://github.com/mirage-hq/Tesseract.git "$HOME\Tesseract"
 
-# 2. Copy all four skill bundles into a root DSH scans
+# 2. Copy all five skill bundles into a root DSH scans
 $dst = "$HOME\.agents\skills"          # shared with other agents
 # $dst = "$HOME\.dsh\skills"           # or: DSH-only
 New-Item -ItemType Directory -Force $dst | Out-Null
@@ -56,7 +56,7 @@ mkdir -p ~/.agents/skills
 cp -R ~/Tesseract/skills/* ~/.agents/skills/
 ```
 
-DSH watches its skill roots, so the four skills appear in the session catalog on the next model step — no restart needed.
+DSH watches its skill roots, so the five skills appear in the session catalog on the next model step — no restart needed.
 
 #### Option C: Project-local install (per-repository)
 

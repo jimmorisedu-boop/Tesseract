@@ -546,7 +546,7 @@ cp -R ~/Tesseract/skills/* ~/.agents/skills/</span>
     <section id="skills" style="margin: 60px 0;">
       <div class="section-head">
         <h2>DeepSeek Harness skills included</h2>
-        <p>Four specialized skills equip the session for every creative task.</p>
+        <p>Five specialized skills equip the session for every creative task.</p>
       </div>
 
       <table class="skills-table">
@@ -577,11 +577,54 @@ cp -R ~/Tesseract/skills/* ~/.agents/skills/</span>
             <td><code>tesseract-editor</code></td>
             <td>Browser-Based Player</td>
             <td>Building and embedding custom web preview players and interactive HTML timeline editors.</td>
+          </tr>          <tr>
+            <td><code>news-review-video</code></td>
+            <td>News-Review House Style</td>
+            <td>Block structure, insert cadence, mandatory camera moves on every still, sourced inserts with a provenance ledger, and pacing QC before delivery.</td>
           </tr>
         </tbody>
       </table>
     </section>
 
+    <!-- HOUSE STYLE SECTION -->
+    <section id="house-style" style="margin: 60px 0;">
+      <div class="section-head">
+        <h2>House style for news-review episodes</h2>
+        <p>A fifth skill turns the four capabilities into a repeatable news-roundup format.</p>
+      </div>
+
+      <p style="color: var(--st-gray); font-size: 15px;">
+        <code>news-review-video</code> defines the delivery standard for news roundups, weekly digests, and commentary
+        episodes. It ships with the measured profile of the reference episode, so the pacing rules are numbers, not taste.
+      </p>
+
+      <table class="skills-table">
+        <thead>
+          <tr><th>Rule</th><th>Value</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Intro teaser</td><td>45–75 s, 20–30 cuts/min</td></tr>
+          <tr><td>Episode body</td><td>5–12 cuts/min, a new insert every 4–8 s</td></tr>
+          <tr><td>Every still, photo, screenshot</td><td>must move — push-in, pull-out, pan, or highlight at 3–6 % scale per second</td></tr>
+          <tr><td>Frozen frames</td><td>none ≥ 2 s; no low-motion stretch ≥ 10 s</td></tr>
+          <tr><td>Third-party inserts</td><td>real material only, downloaded locally, one provenance record per file</td></tr>
+          <tr><td>Delivery</td><td>render + editable <code>.tsrct</code> + <code>assets/sources.json</code> + pacing report</td></tr>
+        </tbody>
+      </table>
+
+      <h4 style="margin-top: 28px; margin-bottom: 6px;">Check the pacing of a finished render</h4>
+      <div class="code-block">
+        <button class="copy-btn" onclick="copySnippet('cmd-pacing', this)">Copy Command</button>
+        <span id="cmd-pacing">python "$env:USERPROFILE\.agents\skills\news-review-video\scripts\measure_pacing.py" `
+  render\episode-1080p.mp4 --intro 66 --json render\pacing-report.json</span>
+      </div>
+
+      <div class="note">
+        <strong>Global rules:</strong> point <code>~/.dsh/AGENTS.md</code> at the skill so every session applies the standard
+        automatically. The skill's <code>references/</code> folder carries the full style standard, the insert-sourcing
+        workflow (yt-dlp, headless screenshots, ledger schema), and the acceptance checklist.
+      </div>
+    </section>
     <!-- PROMPTS SECTION -->
     <section id="prompts" style="margin: 60px 0;">
       <div class="section-head">
@@ -662,7 +705,7 @@ cp -R ~/Tesseract/skills/* ~/.agents/skills/</span>
         </details>
         <details>
           <summary>Do I need both the plugin and the skills?</summary>
-          <p>No. Installing Tesseract as skills registers all four capabilities (<code>tesseract-video</code>, <code>tesseract-motion</code>, <code>tesseract-design</code>, <code>tesseract-editor</code>) plus the runtime guidance. You don't need both.</p>
+          <p>No. Installing Tesseract as skills registers all five capabilities (<code>tesseract-video</code>, <code>tesseract-motion</code>, <code>tesseract-design</code>, <code>tesseract-editor</code>, <code>news-review-video</code>) plus the runtime guidance. You don't need both.</p>
         </details>
       </div>
     </section>
