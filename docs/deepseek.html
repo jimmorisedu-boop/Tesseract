@@ -660,6 +660,46 @@ cp -R ~/Tesseract/skills/* ~/.agents/skills/</span>
       </div>
     </section>
 
+    <!-- INFOGRAPHICS SECTION -->
+    <section id="infographics" style="margin: 60px 0;">
+      <div class="section-head">
+        <h2>Infographics: search the registry before drawing</h2>
+        <p>Charts, maps and diagrams are searched for first — roughly 400 blocks already exist, and the good ones carry the typography and labels you would otherwise forget.</p>
+      </div>
+
+      <table class="skills-table">
+        <thead>
+          <tr><th>Step</th><th>Command</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Search (392 items in 0.8.145)</td><td><code>npx hyperframes catalog chart --json</code></td></tr>
+          <tr><td>Blocks only</td><td><code>npx hyperframes catalog data --type=block</code></td></tr>
+          <tr><td>Install into the project</td><td><code>npx hyperframes add data-chart --dir .</code></td></tr>
+          <tr><td>Acceptance on a frame</td><td><code>python skills/news-review-video/scripts/graphics_qc.py frame.png</code></td></tr>
+        </tbody>
+      </table>
+
+      <p style="color: var(--st-gray); font-size: 15px;">
+        Verified names for news work: <code>data-chart</code>, <code>chart-story</code>,
+        <code>mk-line-graph</code>, <code>animated-bar-chart</code>, <code>bar-chart-race</code>,
+        <code>decline-chart</code>, <code>count-up</code>, <code>number-wheel</code>,
+        <code>mk-progress-stat</code>, <code>world-map</code>, <code>us-map*</code>,
+        <code>flowchart</code>, <code>comparison-split</code>, <code>beat-timeline</code>,
+        <code>lower-third-bild</code>, <code>code-diff</code>, <code>x-post</code>,
+        <code>yt-comment-card</code>.
+      </p>
+
+      <div class="note">
+        <strong>A registry block is a frame, not a finished look.</strong> It ships its own fonts,
+        palette and English copy — <code>data-chart</code> arrives with a serif headline and a cream
+        <code>#faf9f6</code> stage. Re-token it to the house style (one sans family, one accent,
+        Russian labels, real data from the ledger) before it goes into an episode, or the episode
+        reads as a patchwork of templates. And note that <code>hyperframes check</code> reports a
+        false contrast failure on SVG labels inside a sub-composition: the measured number does not
+        change when you change the text colour, so confirm against the rendered frame.
+      </div>
+    </section>
+
     <!-- PROMPTS SECTION -->
     <section id="prompts" style="margin: 60px 0;">
       <div class="section-head">

@@ -195,6 +195,37 @@ imported layer composited over footage with the transparent areas showing the vi
 underneath. Full standard, measured motion norms and the bans against a generated look:
 `skills/news-review-video/references/graphics-pipeline.md`.
 
+## Infographics: search the registry before drawing
+
+Charts, maps, diagrams, timelines and big numbers follow
+`skills/news-review-video/references/infographic-standard.md`. The registry already covers most of
+them — search first, hand-build only when nothing fits:
+
+```sh
+npx hyperframes catalog chart --json        # search (392 items in 0.8.145)
+npx hyperframes catalog data --type=block   # blocks only
+npx hyperframes add data-chart --dir .      # install into the project
+```
+
+Verified names for news work: `data-chart` (15 s, 1920x1080, NYT-style bars + line), `chart-story`,
+`mk-line-graph`, `animated-bar-chart`, `bar-chart-race`, `decline-chart`, `count-up`,
+`number-wheel`, `mk-progress-stat`, `world-map`, `us-map*`, `flowchart`, `flowchart-vertical`,
+`comparison-split`, `beat-timeline`, `lower-third-bild`, `code-diff`, `x-post`, `yt-comment-card`.
+
+A registry block is a frame, not a finished look: it ships its own fonts, palette and English copy.
+Re-token it to the house style (one sans family, one accent, Russian labels, real data from the
+ledger) before it goes into an episode — otherwise the episode reads as a patchwork of templates.
+`data-chart`, for example, arrives with a serif headline and a cream `#faf9f6` stage.
+
+Rules that matter most: one thought per frame, the headline states the finding, direct labels with
+units instead of a corner legend, the source on screen and in `assets/sources.json`, real numbers
+only, and motion that follows the data (bars grow, the line draws, the counter counts during the
+action). Acceptance: `python skills/news-review-video/scripts/graphics_qc.py <frame.png>` measures
+palette, accent share (<= 8%), text contrast (>= 4.5:1) and graphic-object contrast (>= 3:1), flags
+banned colours and writes a 480 px copy for the phone test. Note that `hyperframes check` reports a
+false contrast failure on SVG labels inside a sub-composition — the number does not change when you
+change the text colour — so confirm against the rendered frame.
+
 ## Runtime CLI requirements
 
 - **Windows**: 64-bit Windows 10 or later (`%LOCALAPPDATA%\Tesseract\bin\tsrct.cmd`).
